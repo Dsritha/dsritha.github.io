@@ -1,0 +1,728 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sritha | Data Science Student</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #1e293b;
+            --secondary: #334155;
+            --accent: #f59e0b;
+            --accent-light: #fbbf24;
+            --accent-dark: #d97706;
+            --dark: #0f172a;
+            --light: #fefefe;
+            --gray: #64748b;
+            --soft-bg: #f8fafc;
+            --card-bg: #ffffff;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+            color: var(--dark);
+            line-height: 1.7;
+            overflow-x: hidden;
+        }
+
+        /* Animated Background */
+        .bg-animation {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            overflow: hidden;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%);
+        }
+
+        .floating-shape {
+            position: absolute;
+            background: radial-gradient(circle, rgba(255, 255, 255, 0.15) 0%, rgba(255, 255, 255, 0.05) 100%);
+            border-radius: 50%;
+            animation: float 25s infinite ease-in-out;
+            backdrop-filter: blur(2px);
+        }
+
+        .shape1 { width: 300px; height: 300px; top: 10%; left: 5%; animation-delay: 0s; }
+        .shape2 { width: 450px; height: 450px; top: 50%; left: 60%; animation-delay: 3s; }
+        .shape3 { width: 250px; height: 250px; top: 30%; left: 75%; animation-delay: 6s; }
+        .shape4 { width: 350px; height: 350px; top: 70%; left: 10%; animation-delay: 9s; }
+
+        @keyframes float {
+            0%, 100% { transform: translate(0, 0) scale(1); opacity: 0.6; }
+            33% { transform: translate(50px, -60px) scale(1.15); opacity: 0.8; }
+            66% { transform: translate(-40px, 50px) scale(0.95); opacity: 0.7; }
+        }
+
+        /* Container */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        /* Header/Hero Section */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            color: white;
+            padding: 40px 20px;
+            position: relative;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: 
+                radial-gradient(circle at 30% 20%, rgba(255, 255, 255, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 70% 80%, rgba(255, 255, 255, 0.08) 0%, transparent 50%);
+            pointer-events: none;
+        }
+
+        .hero-content {
+            animation: fadeInUp 1s ease-out;
+            position: relative;
+            z-index: 1;
+        }
+
+        .profile-image {
+            width: 180px;
+            height: 180px;
+            border-radius: 50%;
+            border: 4px solid rgba(255, 255, 255, 0.3);
+            margin: 0 auto 30px;
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0.1));
+            box-shadow: 0 15px 50px rgba(0, 0, 0, 0.2);
+            position: relative;
+            backdrop-filter: blur(10px);
+            animation: pulse 3s infinite;
+            overflow: hidden;
+        }
+
+        .profile-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 50%;
+        }
+
+        .profile-image::after {
+            content: '';
+            position: absolute;
+            inset: -4px;
+            border-radius: 50%;
+            padding: 4px;
+            background: linear-gradient(45deg, rgba(245, 158, 11, 0.6), rgba(251, 191, 36, 0.4));
+            -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            -webkit-mask-composite: xor;
+            mask-composite: exclude;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.03); }
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            margin-bottom: 10px;
+            font-weight: 700;
+            text-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        .hero .tagline {
+            font-size: 1.35rem;
+            margin-bottom: 30px;
+            opacity: 0.95;
+            font-weight: 400;
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+        }
+
+        .social-links {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            margin-top: 30px;
+            flex-wrap: wrap;
+        }
+
+        .social-links a {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 12px 26px;
+            background: rgba(255, 255, 255, 0.25);
+            color: white;
+            text-decoration: none;
+            border-radius: 12px;
+            font-weight: 500;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            font-size: 0.95rem;
+            backdrop-filter: blur(10px);
+        }
+
+        .social-links a:hover {
+            background: rgba(255, 255, 255, 0.95);
+            color: var(--accent);
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            border-color: rgba(255, 255, 255, 0.8);
+        }
+
+        /* Main Content */
+        .main-content {
+            background: var(--soft-bg);
+            padding: 80px 20px;
+        }
+
+        .section {
+            margin-bottom: 100px;
+            animation: fadeInUp 1s ease-out;
+        }
+
+        .section-title {
+            font-size: 2.2rem;
+            color: var(--primary);
+            margin-bottom: 50px;
+            text-align: center;
+            position: relative;
+            padding-bottom: 20px;
+            font-weight: 600;
+            letter-spacing: -0.02em;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 4px;
+            background: linear-gradient(90deg, var(--accent), var(--accent-light));
+            border-radius: 3px;
+        }
+
+        /* About Section */
+        .about-content {
+            background: white;
+            padding: 50px;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04);
+            max-width: 800px;
+            margin: 0 auto;
+            border: 1px solid rgba(0, 0, 0, 0.04);
+        }
+
+        .about-content p {
+            font-size: 1.05rem;
+            color: var(--gray);
+            margin-bottom: 20px;
+            line-height: 1.8;
+        }
+
+        .highlight {
+            color: var(--accent);
+            font-weight: 600;
+            background: linear-gradient(120deg, rgba(212, 175, 55, 0.1) 0%, rgba(212, 175, 55, 0.05) 100%);
+            padding: 2px 6px;
+            border-radius: 4px;
+        }
+
+        /* Skills Section */
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 25px;
+        }
+
+        .skill-card {
+            background: white;
+            padding: 35px;
+            border-radius: 12px;
+            box-shadow: 0 2px 12px rgba(0, 0, 0, 0.04);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            border: 1px solid rgba(0, 0, 0, 0.04);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .skill-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: linear-gradient(90deg, var(--accent) 0%, var(--accent-light) 100%);
+            transform: scaleX(0);
+            transform-origin: left;
+            transition: transform 0.4s ease;
+        }
+
+        .skill-card:hover::before {
+            transform: scaleX(1);
+        }
+
+        .skill-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.08);
+            border-color: rgba(245, 158, 11, 0.3);
+        }
+
+        .skill-card h3 {
+            color: var(--primary);
+            margin-bottom: 20px;
+            font-size: 1.2rem;
+            font-weight: 600;
+        }
+
+        .skill-card ul {
+            list-style: none;
+        }
+
+        .skill-card li {
+            padding: 10px 0;
+            color: var(--gray);
+            position: relative;
+            padding-left: 25px;
+            font-size: 0.95rem;
+            line-height: 1.6;
+        }
+
+        .skill-card li::before {
+            content: '→';
+            position: absolute;
+            left: 0;
+            color: var(--accent);
+            font-weight: normal;
+            font-size: 1.1rem;
+        }
+
+        /* Events Section */
+        .events-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+
+        .event-card {
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 2px 12px rgba(0, 0, 0, 0.04);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            border: 1px solid rgba(0, 0, 0, 0.04);
+        }
+
+        .event-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 16px 40px rgba(0, 0, 0, 0.12);
+            border-color: rgba(245, 158, 11, 0.3);
+        }
+
+        .event-content {
+            padding: 35px;
+        }
+
+        .event-icon {
+            width: 56px;
+            height: 56px;
+            background: linear-gradient(135deg, rgba(245, 158, 11, 0.15) 0%, rgba(251, 191, 36, 0.1) 100%);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            margin-bottom: 20px;
+            border: 2px solid rgba(245, 158, 11, 0.2);
+        }
+
+        .event-card h3 {
+            color: var(--primary);
+            font-size: 1.35rem;
+            margin-bottom: 15px;
+            font-weight: 600;
+        }
+
+        .event-card p {
+            color: var(--gray);
+            line-height: 1.7;
+            font-size: 0.95rem;
+        }
+
+        /* Hackathons Section */
+        .hackathons-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 25px;
+        }
+
+        .hackathon-item {
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 2px 12px rgba(0, 0, 0, 0.04);
+            border-left: 3px solid var(--accent);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            border-top: 1px solid rgba(0, 0, 0, 0.04);
+            border-right: 1px solid rgba(0, 0, 0, 0.04);
+            border-bottom: 1px solid rgba(0, 0, 0, 0.04);
+        }
+
+        .hackathon-item:hover {
+            transform: translateX(5px);
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+            border-left-width: 4px;
+        }
+
+        .hackathon-item h4 {
+            color: var(--primary);
+            margin-bottom: 12px;
+            font-size: 1.15rem;
+            font-weight: 600;
+        }
+
+        .hackathon-item p {
+            color: var(--gray);
+            font-size: 0.93rem;
+            line-height: 1.6;
+        }
+
+        /* Experience Section */
+        .experience-card {
+            background: white;
+            padding: 45px;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04);
+            max-width: 900px;
+            margin: 0 auto;
+            border: 1px solid rgba(0, 0, 0, 0.04);
+        }
+
+        .experience-header {
+            border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+            padding-bottom: 20px;
+            margin-bottom: 25px;
+        }
+
+        .experience-header h3 {
+            color: var(--primary);
+            font-size: 1.6rem;
+            margin-bottom: 8px;
+            font-weight: 600;
+        }
+
+        .experience-header .duration {
+            color: var(--gray);
+            font-style: italic;
+            font-size: 0.95rem;
+        }
+
+        .experience-card ul {
+            list-style: none;
+        }
+
+        .experience-card li {
+            padding: 12px 0;
+            color: var(--gray);
+            position: relative;
+            padding-left: 28px;
+            line-height: 1.7;
+        }
+
+        .experience-card li::before {
+            content: '✓';
+            position: absolute;
+            left: 0;
+            color: var(--accent);
+            font-weight: bold;
+            font-size: 1.1rem;
+        }
+
+        /* Footer */
+        footer {
+            background: var(--dark);
+            color: rgba(255, 255, 255, 0.8);
+            text-align: center;
+            padding: 50px 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        footer p {
+            font-size: 0.95rem;
+            line-height: 1.8;
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero h1 { font-size: 2.5rem; }
+            .hero .tagline { font-size: 1.1rem; }
+            .section-title { font-size: 2rem; }
+            .social-links { flex-direction: column; align-items: center; }
+        }
+    </style>
+</head>
+<body>
+    <!-- Animated Background -->
+    <div class="bg-animation">
+        <div class="floating-shape shape1"></div>
+        <div class="floating-shape shape2"></div>
+        <div class="floating-shape shape3"></div>
+        <div class="floating-shape shape4"></div>
+    </div>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-content">
+            <div class="profile-image">
+                <img src="profile.png" alt="Sritha's Profile Photo">
+            </div>
+            <h1>Sritha</h1>
+            <p class="tagline">Data Science Student | ML Enthusiast | Cloud Explorer</p>
+            <p style="font-size: 1.1rem; margin-top: 10px;">4th Year MSc Data Science @ Amrita Vishwa Vidyapeetham</p>
+            
+            <div class="social-links">
+                <a href="https://www.linkedin.com/in/sritha-d-5332b1220" target="_blank">
+                    <span>🔗</span> LinkedIn
+                </a>
+                <a href="https://github.com/Dsritha" target="_blank">
+                    <span>💻</span> GitHub
+                </a>
+                <a href="aka780357@gmail.com">
+                    <span>✉️</span> Email
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Main Content -->
+    <div class="main-content">
+        <div class="container">
+            
+            <!-- About Section -->
+            <section class="section">
+                <h2 class="section-title">About Me</h2>
+                <div class="about-content">
+                    <p>
+                        Hello! I'm a <span class="highlight">4th-year integrated MSc Data Science</span> student at Amrita Vishwa Vidyapeetham, Coimbatore, with a passion for transforming data into actionable insights.
+                    </p>
+                    <p>
+                        My journey in tech has been exciting—from building machine learning models that achieve <span class="highlight">98% accuracy</span> in Android malware detection to developing interactive web solutions with Zoho products. I love exploring the intersection of <span class="highlight">AI, cloud computing, and data analytics</span>.
+                    </p>
+                    <p>
+                        When I'm not coding, you'll find me playing the keyboard, creating canvas paintings, or practicing yoga (State-level Silver Medalist! 🥈).
+                    </p>
+                </div>
+            </section>
+
+            <!-- Technical Skills -->
+            <section class="section">
+                <h2 class="section-title">Technical Skills</h2>
+                <div class="skills-grid">
+                    <div class="skill-card">
+                        <h3>Programming Languages</h3>
+                        <ul>
+                            <li>Python (Pandas, NumPy, Scikit-learn)</li>
+                            <li>SQL & R</li>
+                            <li>BeautifulSoup for web scraping</li>
+                        </ul>
+                    </div>
+                    <div class="skill-card">
+                        <h3>Machine Learning</h3>
+                        <ul>
+                            <li>XGBoost, Random Forest</li>
+                            <li>TensorFlow & PyTorch</li>
+                            <li>Clustering & Classification</li>
+                            <li>Model Evaluation</li>
+                        </ul>
+                    </div>
+                    <div class="skill-card">
+                        <h3>Data Analytics</h3>
+                        <ul>
+                            <li>Statistical Analysis</li>
+                            <li>Data Visualization (Matplotlib, Seaborn)</li>
+                            <li>Data Cleaning & Transformation</li>
+                            <li>Dataset Creation</li>
+                        </ul>
+                    </div>
+                    <div class="skill-card">
+                        <h3>Tools & Platforms</h3>
+                        <ul>
+                            <li>Google Cloud Platform</li>
+                            <li>Zoho Suite (Sites, CRM, SalesIQ)</li>
+                            <li>Git & GitHub</li>
+                            <li>Flask, HTML, CSS</li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Experience -->
+            <section class="section">
+                <h2 class="section-title">Experience</h2>
+                <div class="experience-card">
+                    <div class="experience-header">
+                        <h3>Trivicta Digital Solutions Private Limited</h3>
+                        <p class="duration">May 2025 – July 2025 | Internship</p>
+                    </div>
+                    <ul>
+                        <li>Built a complete website using Zoho Sites with custom themes and plugins</li>
+                        <li>Integrated Zoho SalesIQ ChatBot for real-time customer engagement</li>
+                        <li>Gained hands-on experience with WordPress, Zoho CRM, Zoho Desk, Zoho Bookings, Zoho Flow, and Deluge Script</li>
+                    </ul>
+                </div>
+            </section>
+
+            <!-- Major Events Attended -->
+            <section class="section">
+                <h2 class="section-title">Major Events & Conferences</h2>
+                <div class="events-grid">
+                    <div class="event-card">
+                        <div class="event-content">
+                            <div class="event-icon">🚀</div>
+                            <h3>Zoholics</h3>
+                            <p>Annual Zoho event showcasing upcoming products and innovations. Met with CEOs and CTOs from various companies, explored product stalls, and networked with industry leaders in the Zoho ecosystem.</p>
+                        </div>
+                    </div>
+                    <div class="event-card">
+                        <div class="event-content">
+                            <div class="event-icon">👥</div>
+                            <h3>Google Developer Community Days</h3>
+                            <p>Participated in Google's developer community event, connecting with fellow developers, learning about latest Google technologies, and engaging in hands-on technical sessions.</p>
+                        </div>
+                    </div>
+                    <div class="event-card">
+                        <div class="event-content">
+                            <div class="event-icon">🤖</div>
+                            <h3>Google AI Lab Series</h3>
+                            <p>Got exclusive access to the latest Gemini version and Google Cloud services. Received login credentials to explore and experiment with cutting-edge Google Cloud tools and AI capabilities.</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Hackathons -->
+            <section class="section">
+                <h2 class="section-title">Hackathons & Competitions</h2>
+                <div class="hackathons-list">
+                    <div class="hackathon-item">
+                        <h4>🏆 Infosys iAccelerate Women's Hackathon</h4>
+                        <p>Submitted STELLA—a personalized AI-driven women's healthcare chatbot using advanced clustering (GMM, hierarchical clustering)</p>
+                    </div>
+                    <div class="hackathon-item">
+                        <h4>🎯 Trinity IIT Pune</h4>
+                        <p>Participated in technical competition focused on innovative solutions</p>
+                    </div>
+                    <div class="hackathon-item">
+                        <h4>🏆 PEC Hacks 3.0 - Team C'Breeze</h4>
+                        <p>Developed "Ektara: A Symphony of Art & AI" - an AI-powered marketplace platform empowering local artisans with digital storytelling, predictive analytics, and automated marketing to reach global markets</p>
+                    </div>
+                    <div class="hackathon-item">
+                        <h4>💡 Google AI Exchange Hackathon</h4>
+                        <p>Submitted "Ektara" - using LLMs for automated content generation, predictive market insights, and SEO optimization to bridge the gap between traditional artisans and digital commerce</p>
+                    </div>
+                    <div class="hackathon-item">
+                        <h4>☕ Zoho's Cliqtrix - Break Buddy</h4>
+                        <p>Developed Break Buddy application using Zoho Cliq platform for employee wellness and productivity</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Key Projects -->
+            <section class="section">
+                <h2 class="section-title">Featured Projects</h2>
+                <div class="events-grid">
+                    <div class="event-card">
+                        <div class="event-content">
+                            <div class="event-icon">🛡️</div>
+                            <h3>Android Malware Classification</h3>
+                            <p><strong>Conference Paper (Dec 2024 - Feb 2025)</strong><br>
+                            Developed novel ML classification techniques achieving 98% accuracy using Random Forest, SVM, XGBoost, and ensemble learning methods.</p>
+                        </div>
+                    </div>
+                    <div class="event-card">
+                        <div class="event-content">
+                            <div class="event-icon">🔗</div>
+                            <h3>URL Classification System</h3>
+                            <p><strong>Dec 2024 - Feb 2025</strong><br>
+                            Implemented algorithms to classify URLs as malicious or benign. Achieved 92% accuracy across 5 classes using Decision Trees and LightGBM.</p>
+                        </div>
+                    </div>
+                    <div class="event-card">
+                        <div class="event-content">
+                            <div class="event-icon">📚</div>
+                            <h3>Library Management System</h3>
+                            <p><strong>June 2024 - Nov 2024</strong><br>
+                            Comprehensive database system using SQL, HTML, and Flask. Led frontend design in team of 3 with complex query implementation.</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Certifications -->
+            <section class="section">
+                <h2 class="section-title">Certifications</h2>
+                <div class="about-content">
+                    <h3 style="color: var(--primary); margin-bottom: 15px;">NPTEL Certifications</h3>
+                    <ul style="list-style: none; margin-bottom: 25px;">
+                        <li style="padding: 8px 0; color: var(--gray);">✓ Introduction to Large Language Models (Elite)</li>
+                        <li style="padding: 8px 0; color: var(--gray);">✓ Google Cloud Computing Foundations (Silver Badge)</li>
+                        <li style="padding: 8px 0; color: var(--gray);">✓ Big Data Analytics (Silver Badge)</li>
+                        <li style="padding: 8px 0; color: var(--gray);">⏳ Time Series Modelling and Forecasting with R (Ongoing)</li>
+                    </ul>
+                    
+                    <h3 style="color: var(--primary); margin-bottom: 15px;">IBM SkillsBuild</h3>
+                    <ul style="list-style: none;">
+                        <li style="padding: 8px 0; color: var(--gray);">✓ AI Fundamentals (ML, DL, NLP, Computer Vision)</li>
+                        <li style="padding: 8px 0; color: var(--gray);">⏳ Cloud Computing Fundamentals (Ongoing)</li>
+                        <li style="padding: 8px 0; color: var(--gray);">⏳ Data Science Foundations (Ongoing)</li>
+                    </ul>
+                </div>
+            </section>
+
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <p>&copy; 2025 Sritha | Built with 💜 and hosted on Cloudflare Pages</p>
+            <p style="margin-top: 10px; font-size: 0.9rem;">Data Science Student | Machine Learning Enthusiast | Cloud Explorer</p>
+        </div>
+    </footer>
+
+</body>
+</html>
